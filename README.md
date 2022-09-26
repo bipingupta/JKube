@@ -50,7 +50,7 @@ kubectl.exe cluster-info
 
 ```
 ==========================================================
-			Development Goals Description
+		Development Goals Description
 ==========================================================
 mvn k8s:deploy 				==>> Deploy resources descriptors to a cluster after creating them and building the app. 
               					 Same as k8s:apply except that it runs in the background.
