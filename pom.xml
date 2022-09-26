@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.9.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>com.jini.app</groupId>
+	<artifactId>greeting</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>greeting-jib-spring-boot-app</name>
+	<description>Demo project for Spring Boot and jib, jkube maven plugin</description>
+
+	<properties>
+		<maven.test.skip>true</maven.test.skip>
+		<java.version>1.8</java.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<jkube.version>1.9.1</jkube.version>
+		<jkube.enricher.jkube-service.type>NodePort</jkube.enricher.jkube-service.type>
+		<jkube.generator.name>${docker.registry}/${docker.repo}/${project.build.finalName}:${docker.tag}</jkube.generator.name>
+
+		<docker.registry>docker.io</docker.registry>
+		<docker.repo>bipingupta007</docker.repo>
+		<docker.tag>latest</docker.tag>
+		<docker.name>${docker.registry}/${docker.repo}/${project.build.finalName}:${docker.tag}</docker.name>
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jkube</groupId>
+			<artifactId>kubernetes-maven-plugin</artifactId>
+			<version>${jkube.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludeDevtools>true</excludeDevtools>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.jini.app.greeting.Application</mainClass>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.jini.app.greeting.Application</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.jkube</groupId>
+				<artifactId>kubernetes-maven-plugin</artifactId>
+				<version>${jkube.version}</version>
+				<configuration>
+					<repository>${docker.registry}/${project.artifactId}</repository>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>2.7.1</version>
+				<configuration>
+					<from>
+						<image>openjdk:8-jre</image>
+					</from>
+					<to>
+						<image>${docker.name}</image>
+					</to>
+					<container>
+						<environment>
+							<_JAVA_OPTIONS>'-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005'</_JAVA_OPTIONS>
+							<swarm.http.port>8080</swarm.http.port>
+						</environment>
+						<ports>
+							<port>8080</port>
+							<port>5005</port>
+						</ports>
+					</container>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>
