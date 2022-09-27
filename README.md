@@ -42,6 +42,7 @@ minikube dashboard --url=true		==>> To Open Dashboard
 ```
 kubectl logs greeting-c5ff768db-dlllq	==>> To Watch logs of Spring-Boot Application
 ```
+
 ####[The cloud-native Java workflow simplified with Eclipse JKube]
 ![The cloud-native Java workflow simplified with Eclipse JKube](images/Cloud-Native-Java-Workflow-Using-Eclipse-JKube.png)
 
