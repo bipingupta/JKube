@@ -13,7 +13,7 @@
 minikube start				==>> Start minikube
 ```
 ```
-mvn clean install
+mvn clean install			==>> Clean target
 ```
 ```
 mvn k8s:build				==>> Build images
@@ -42,11 +42,9 @@ minikube dashboard --url=true		==>> To Open Dashboard
 ```
 kubectl logs greeting-c5ff768db-dlllq	==>> To Watch logs of Spring-Boot Application
 ```
-```
-minikube.exe ip
-kubectl.exe cluster-info
-```
 
+![The cloud-native Java workflow simplified with Eclipse JKube](images/Cloud-Native-Java-Workflow-Using-Eclipse-JKube.png)
+#####[The cloud-native Java workflow simplified with Eclipse JKube]
 
 ```
 ==========================================================
@@ -64,15 +62,20 @@ This setup make some opinionated decisions for you:
     It exports port 8080 as the application service port (and 8778 and 9779 for Jolokia and jmx_exporter access, respectively)
 ==========================================================
 ```
+
 ```
 mvn package k8s:build
 mvn k8s:push
 mvn k8s:resource k8s:deploy
 minikube service greeting
+minikube.exe ip
 
 ```
+
 ```
 ==========================================================
+#####  Get Objects/Resource info  #####
+kubectl.exe cluster-info
 kubectl get pods -w
 kubectl get all
 kubectl get svc
@@ -80,14 +83,14 @@ kubectl logs greeting-bd669bf97-2dvdw
 kubectl get ingress
 kubectl describe deployment test-webapp
 
-##### To get all the resources.
+#####  To get all the resources.  #####
 kubectl get pods,services,deployments,jobs,daemonset
 
 kubectl delete -f ./deployment.yaml
 kubectl delete deployment nginx-deployment
 kubectl delete ns <name>
 
-##### Delete the resources:
+#####  Delete the resources.  #####
 kubectl delete deployments <deployment>
 kubectl delete services <services>
 kubectl delete pods <pods>
