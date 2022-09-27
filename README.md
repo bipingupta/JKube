@@ -43,7 +43,7 @@ minikube dashboard --url=true		==>> To Open Dashboard
 kubectl logs greeting-c5ff768db-dlllq	==>> To Watch logs of Spring-Boot Application
 ```
 
-####[The cloud-native Java workflow simplified with Eclipse JKube]
+#### The cloud-native Java workflow simplified with Eclipse JKube
 ![The cloud-native Java workflow simplified with Eclipse JKube](images/Cloud-Native-Java-Workflow-Using-Eclipse-JKube.png)
 
 
@@ -70,7 +70,6 @@ mvn k8s:push
 mvn k8s:resource k8s:deploy
 minikube service greeting
 minikube.exe ip
-
 ```
 
 ```
